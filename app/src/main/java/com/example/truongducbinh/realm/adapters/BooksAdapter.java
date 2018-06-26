@@ -31,6 +31,7 @@ public class BooksAdapter extends RealmRecyclerViewAdapter<Book> {
 
     public BooksAdapter(Context context) {
         this.context = context;
+        realm = RealmController.getInstance().getRealm();
     }
 
     @NonNull
@@ -43,7 +44,6 @@ public class BooksAdapter extends RealmRecyclerViewAdapter<Book> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
-        realm = RealmController.getInstance().getRealm();
 
         // get the article
         final Book book = getItem(position);

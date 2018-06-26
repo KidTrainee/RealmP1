@@ -1,6 +1,5 @@
 package com.example.truongducbinh.realm.activity;
 
-import android.content.DialogInterface;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -102,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setRealmAdapter(RealmResults<Book> books) {
         RealmBooksAdapter realmBooksAdapter = new RealmBooksAdapter(this, books, true);
-        adapter.setRealmBaseAdapter(realmBooksAdapter);
+        adapter.setRealmAdapter(realmBooksAdapter);
         adapter.notifyDataSetChanged();
     }
 

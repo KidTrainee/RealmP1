@@ -2,6 +2,7 @@ package com.example.truongducbinh.realm.realm;
 
 import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import com.example.truongducbinh.realm.model.Book;
@@ -14,14 +15,21 @@ public class RealmController {
     private static RealmController instance;
     private final Realm realm;
 
-    public RealmController(Application application) {
+    public RealmController() {
         realm = Realm.getDefaultInstance();
+    }
+
+    public static RealmController with(Application application) {
+        if (instance == null) {
+            instance = new RealmController();
+        }
+        return instance;
     }
 
     public static RealmController with(Fragment fragment) {
 
         if (instance == null) {
-            instance = new RealmController(fragment.getActivity().getApplication());
+            instance = RealmController.with(fragment.getActivity().getApplication());
         }
         return instance;
     }
@@ -30,21 +38,15 @@ public class RealmController {
     public static RealmController with(Activity activity) {
 
         if (instance == null) {
-            instance = new RealmController(activity.getApplication());
-        }
-        return instance;
-    }
-
-    public static RealmController with(Application application) {
-
-        if (instance == null) {
-            instance = new RealmController(application);
+            instance = RealmController.with(activity.getApplication());
         }
         return instance;
     }
 
     public static RealmController getInstance() {
-
+        if (instance == null) {
+            instance = new RealmController();
+        }
         return instance;
     }
 

@@ -21,7 +21,7 @@ public abstract class RealmRecyclerViewAdapter<T extends RealmObject> extends Re
         return realmBaseAdapter;
     }
 
-    public void setRealmBaseAdapter(RealmBaseAdapter<T> realmBaseAdapter) {
+    public void setRealmAdapter(RealmBaseAdapter<T> realmBaseAdapter) {
         this.realmBaseAdapter = realmBaseAdapter;
     }
 }
