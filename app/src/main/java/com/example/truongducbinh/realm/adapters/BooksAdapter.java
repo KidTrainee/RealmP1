@@ -16,15 +16,16 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.truongducbinh.realm.R;
+import com.example.truongducbinh.realm.application.Prefs;
 import com.example.truongducbinh.realm.model.Book;
 import com.example.truongducbinh.realm.realm.RealmController;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 
-public class BooksAdapter extends RealmRecyclerViewAdapter<Book>{
+public class BooksAdapter extends RealmRecyclerViewAdapter<Book> {
 
-    final Context context;
+    private final Context context;
     private Realm realm;
     private LayoutInflater inflater;
 
@@ -68,30 +69,27 @@ public class BooksAdapter extends RealmRecyclerViewAdapter<Book>{
         }
 
         // remove single match from realm
-        holder.card.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                RealmResults<Book> results = realm.where(Book.class).findAll();
-                // Get the book title to show it in toast message
-                Book b = results.get(position);
-                String title = b.getTitle();
+        holder.card.setOnLongClickListener(view -> {
+            RealmResults<Book> results = realm.where(Book.class).findAll();
+            // Get the book title to show it in toast message
+            Book b = results.get(position);
+            String title = b.getTitle();
 
-                // All changes to data must happen in a transaction
-                realm.beginTransaction();
+            // All changes to data must happen in a transaction
+            realm.beginTransaction();
 
-                // remove single match
-                results.remove(position);
-                realm.commitTransaction();
+            // remove single match
+            results.remove(position);
+            realm.commitTransaction();
 
-//                if (results.size() == 0) {
-//                    Prefs.with(context).setPreLoad(false);
-//                }
-
-                notifyDataSetChanged();
-
-                Toast.makeText(context, title + " is removed from Realm", Toast.LENGTH_SHORT).show();
-                return false;
+            if (results.size() == 0) {
+                Prefs.with(context).setPreLoad(false);
             }
+
+            notifyDataSetChanged();
+
+            Toast.makeText(context, title + " is removed from Realm", Toast.LENGTH_SHORT).show();
+            return false;
         });
 
         holder.card.setOnClickListener(new View.OnClickListener() {
